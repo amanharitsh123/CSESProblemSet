@@ -81,34 +81,13 @@ lli power(lli a,lli b) {
 }
 
 void solve() {
-  lli n;
-  cin >> n;
-  lli sum = (n*(n+1))/2;
-  if(sum%2!=0) {
+  lli a, b;
+  cin >> a >> b;
+  lli v1=2*a-b, v2=2*b-a;
+  if(v1<0 or v2<0 or v1%3!=0 or v2%3!=0)
     cout << "NO" << endl;
-    return;
-  }
-
-  vector<int> ans[2];
-  int turn=0;
-  if(n%2!=0) {
-    turn=1;
-    ans[0].pb(n);
-    --n;
-  }
-
-
-  for(int i=1; i<=n/2; i++) {
-    ans[turn].pb(i);
-    ans[turn].pb(n-i+1);
-    turn^=1;
-  }
-
-  cout << "YES" << endl;
-  cout << ans[0].size() << endl;
-  output(ans[0]);
-  cout << ans[1].size() << endl;
-  output(ans[1]);
+  else
+    cout << "YES" << endl;
 }
 
 int main() {
@@ -116,7 +95,8 @@ int main() {
   ios_base::sync_with_stdio(false);
   cin.tie(NULL);
 
-  lli testcases=1;
+  lli testcases;
+  cin>>testcases;
   while(testcases--) {
     solve();
   }

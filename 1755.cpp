@@ -54,7 +54,7 @@ void input(vector<T> &arr,lli n) {
 
 template <typename T>
 void output(vector<T> arr) {
-  for(auto x:arr) cout<<x<<" ";
+  for(auto x:arr) cout<<x;
   cout<<endl;
 }
 
@@ -81,34 +81,47 @@ lli power(lli a,lli b) {
 }
 
 void solve() {
-  lli n;
-  cin >> n;
-  lli sum = (n*(n+1))/2;
-  if(sum%2!=0) {
-    cout << "NO" << endl;
+  string inp;
+  cin >> inp;
+  int n=inp.size();
+  int odd=0;
+  if(n%2!=0)
+    odd=1;
+
+  map<char, int> mp;
+  vector<char> ans(n);
+  bool possible=true;
+  for(auto x:inp)
+    mp[x]+=1;
+
+  char odd_char;
+  for(auto x:mp)
+    if(x.second%2) {
+      if(odd==0)
+        possible=false;
+      else
+        --odd;
+      odd_char=x.first;
+    }
+
+  if(!possible) {
+    cout << "NO SOLUTION" << endl;
     return;
   }
 
-  vector<int> ans[2];
-  int turn=0;
-  if(n%2!=0) {
-    turn=1;
-    ans[0].pb(n);
-    --n;
+  if(n%2)
+    ans[n/2] = odd_char;
+
+  --mp[odd_char];
+  char cand='A';
+  for(int i=0; i<n/2; i++) {
+    while(mp[cand]==0)
+      ++cand;
+    ans[i]=ans[n-i-1]=cand;
+    mp[cand]-=2;
   }
 
-
-  for(int i=1; i<=n/2; i++) {
-    ans[turn].pb(i);
-    ans[turn].pb(n-i+1);
-    turn^=1;
-  }
-
-  cout << "YES" << endl;
-  cout << ans[0].size() << endl;
-  output(ans[0]);
-  cout << ans[1].size() << endl;
-  output(ans[1]);
+  output(ans);
 }
 
 int main() {

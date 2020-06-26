@@ -83,32 +83,7 @@ lli power(lli a,lli b) {
 void solve() {
   lli n;
   cin >> n;
-  lli sum = (n*(n+1))/2;
-  if(sum%2!=0) {
-    cout << "NO" << endl;
-    return;
-  }
-
-  vector<int> ans[2];
-  int turn=0;
-  if(n%2!=0) {
-    turn=1;
-    ans[0].pb(n);
-    --n;
-  }
-
-
-  for(int i=1; i<=n/2; i++) {
-    ans[turn].pb(i);
-    ans[turn].pb(n-i+1);
-    turn^=1;
-  }
-
-  cout << "YES" << endl;
-  cout << ans[0].size() << endl;
-  output(ans[0]);
-  cout << ans[1].size() << endl;
-  output(ans[1]);
+  cout << power(2, n) << endl;
 }
 
 int main() {
