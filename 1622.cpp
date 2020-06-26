@@ -16,74 +16,51 @@ typedef long long int lli;
 #define pi pair<int,int>
 #define pii pair<int,pi>
 #define pb push_back
-#define gc getchar_unlocked
-#define fo(i,n) for(i=0;i<n;i++)
-#define Fo(i,k,n) for(i=k;k<n?i<n:i>n;k<n?i+=1:i-=1)
-#define ll long long
-#define si(x)	scanf("%d",&x)
-#define sl(x)	scanf("%lld",&x)
-#define ss(s)	scanf("%s",s)
-#define pl(x)	printf("%lld\n",x)
-#define ps(s)	printf("%s\n",s)
-#define deb(x) cout << #x << "=" << x << endl
-#define deb2(x, y) cout << #x << "=" << x << "," << #y << "=" << y << endl
-#define pb push_back
-#define mp make_pair
-#define F first
-#define S second
-#define clr(x) memset(x, 0, sizeof(x))
-#define sortall(x) sort(all(x))
-#define tr(it, a) for(auto it = a.begin(); it != a.end(); it++)
-#define PI 3.1415926535897932384626
-#define MOD 1000000007
-#define space ' '
 
-typedef pair<ll, ll>	pl;
-typedef vector<int>		vi;
-typedef vector<ll>		vl;
-typedef vector<pii>		vpii;
-typedef vector<pl>		vpl;
-typedef vector<vi>		vvi;
-typedef vector<vl>		vvl;
-
-template <typename T>
-void input(vector<T> &arr,lli n) {
-  T temp;
-  for(lli i=0;i<n;i++) cin>>temp, arr.push_back(temp);
-}
-
-template <typename T>
-void output(vector<T> arr) {
-  for(auto x:arr) cout<<x<<" ";
-  cout<<endl;
-}
-
-
-template <typename T>
-void input_set(set<T> &arr,lli n) {
-  T temp;
-  for(lli i=0;i<n;i++) cin>>temp, arr.insert(temp);
-}
-
-lli mul(lli a, lli b) {
-  return (a%MOD*b%MOD)%MOD;
-}
-
-lli power(lli a,lli b) {
+lli power(lli num,lli base) {
   lli ans = 1;
-  while(b > 0) {
-    if(b&1)
-      ans = mul(ans, a);
-    a = mul(a,a);;
-    b >>= 1;
+  while(base>0) {
+    if(base&1)
+      ans = mul(ans, num);
+
+    num = mul(num, num);
+    base >>= 1;
   }
+
   return ans;
+}
+
+vector<string> ans;
+map<char, int> mp;
+
+void foo(string &inp, int n) {
+  if(n==inp.size()) {
+    ans.pb(inp);
+    return;
+  }
+
+  for(char x='a'; x<='z'; x++) {
+    if(mp[x]==0)
+      continue;
+
+    inp.pb(x);
+    mp[x]-=1;
+    foo(inp, n);
+    inp.pop_back();
+    mp[x]+=1;
+  }
 }
 
 void solve() {
   string inp;
   cin >> inp;
-
+  for(auto x:inp)
+    mp[x]+=1;
+  string temp;
+  foo(temp, inp.size());
+  cout << ans.size() << endl;
+  for(auto x:ans)
+    cout << x << endl;
 }
 
 int main() {
@@ -91,9 +68,8 @@ int main() {
   ios_base::sync_with_stdio(false);
   cin.tie(NULL);
 
-  lli testcases;
-  cin>>testcases;
-  while(testcases--) {
+ lli testcases=1;
+ while(testcases--) {
     solve();
   }
 }
