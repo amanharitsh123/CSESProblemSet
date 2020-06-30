@@ -1,7 +1,7 @@
 #include<bits/stdc++.h>
 
 using namespace std;
-typedef long long int lli;
+typedef unsigned long long int lli;
 
 #define all(arr) arr.begin(),arr.end()
 #define f first
@@ -80,21 +80,29 @@ lli power(lli a,lli b) {
   return ans;
 }
 
+lli cal(vector<lli> &arr, lli time) {
+  lli count=0;
+  for(auto x:arr)
+    count+=time/x;
+  return count;
+}
+
 void solve() {
   lli n, t;
   cin >> n >> t;
   vector<lli> arr;
   input(arr, n);
-  sortall(arr);
-  lli current_allo=t;
-  lli ans = 0;
-  for(int i=1; i<n; i++) {
-    lli x=(arr[0]*current_allo)/(arr[i]+arr[0]);
-    ans=max(ans, x*arr[i]);
-    current_allo-=x;
+  lli lo=0, hi=1e19;
+  while(lo<=hi) {
+    lli mid = (lo+hi)/2;
+    lli count = cal(arr, mid);
+    if(count>=t)
+      hi=mid-1;
+    else
+      lo=mid+1;
   }
 
-  cout << max(current_allo*arr[0], ans) << endl;
+  cout << lo << endl;
 }
 
 int main() {
