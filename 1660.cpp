@@ -55,7 +55,21 @@ lli power(lli num,lli base) {
 }
 
 void solve() {
+  lli n, sum;
+  vector<lli> arr;
+  cin >> n >> sum;
+  input(arr, n);
+  lli lo=0, hi=0, cursum=0, count=0;
+  while(hi<n) {
+    cursum+=arr[hi];
+    while(cursum>sum)
+      cursum-=arr[lo], ++lo;
+    if(cursum==sum)
+      ++count;
+    ++hi;
+  }
 
+  cout << count << endl;
 }
 
 int main() {
@@ -63,8 +77,7 @@ int main() {
   ios_base::sync_with_stdio(false);
   cin.tie(NULL);
 
-  lli testcases;
-  cin>>testcases;
+  lli testcases=1;
   while(testcases--) {
     solve();
   }
