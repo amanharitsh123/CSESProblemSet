@@ -87,19 +87,25 @@ lli power(lli a,lli b) {
 void solve() {
   lli n;
   cin >> n;
-  vector<lli> ways(n+1,0);
+  vector<lli> ways(8,0);
   lli ind=0;
   ways[ind]=1;
+  ++ind;
   for(lli i=1; i<=n; i++) {
     lli count=0;
     for(lli j=1; j<=6 and (i-j)>=0; j++) {
-      count=add(count, ways[i-j]);
+      lli target=(8+ind-j)%8;
+      count=add(count, ways[target]);
     }
 
-    ways[i]=count;
+    ways[ind]=count;
+    ind++;
+    ind%=8;
   }
 
-  cout << ways[n] << endl;
+  --ind;
+  ind=(8+ind)%8;
+  cout << ways[ind] << endl;
 }
 
 int main() {
