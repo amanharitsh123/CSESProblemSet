@@ -98,22 +98,23 @@ lli foo(lli sum) {
   dp[sum]=ans;
   return ans;
 }
+
 void solve() {
   lli n, sum;
   cin >> n >> sum;
-  input(arr, n);
-  dp.resize(sum+1, -1);
+  lli arr[n];
+  for(int i=0; i<n; i++)
+    cin >> arr[i];
+  
+  lli dp[sum+1];
   dp[0]=1;
-  cout << foo(sum) << endl;
-  return;
-
-  // Bottom Up
-  for(lli s=0; s<=sum; s++) {
-    for(auto x:arr)
-      if(s>=x)
-        dp[s]=add(dp[s], dp[s-x]);
+  for(lli s=1; s<=sum; s++) {
+    dp[s]=0;
+    for(int i=0; i<n; i++)
+      if(s>=arr[i])
+        dp[s]=(dp[s]+dp[s-arr[i]])%MOD;
   }
-
+ 
   cout << dp[sum] << endl;
 }
 

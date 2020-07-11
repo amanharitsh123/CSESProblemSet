@@ -81,33 +81,24 @@ lli power(lli a,lli b) {
 }
 
 #define add(a,b) (a%MOD+b%MOD)%MOD;
-vector<lli> arr;
-map<pl, lli> dp;
-lli foo(lli i, lli sum) {
-  cout << i << " " << sum << endl;
-  if(sum<0)
-    return 0;
 
-  if(dp.find(mp(i, sum))!=dp.end())
-    return dp[mp(i, sum)];
-
-  if(i<1)
-    return 0;
-
-  lli ans=0, t=sum;
-  ans = add(foo(i, sum-arr[i-1]), foo(i-1, sum));
-  dp[mp(i,t)]=ans;
-  return ans;
-}
+const int N=1e6+1;
+lli dp[N];
 
 void solve() {
   lli n, sum;
   cin >> n >> sum;
-  input(arr, n);
-  for(int i=0; i<=n; i++)
-    dp[mp(i, 0)]=1;
-
-  cout << foo(n, sum) << endl;
+  lli arr[n];
+  for(int i=0; i<n; i++)
+    cin >> arr[i];
+  dp[0]=1;
+  for(lli i=0; i<n; i++) {
+    for(lli s=1; s<=sum; s++)
+      if(s>=arr[i])
+        dp[s]=(dp[s]+dp[s-arr[i]])%MOD;
+  }
+ 
+  cout << dp[sum] << endl;
 }
 
 int main() {
@@ -120,4 +111,5 @@ int main() {
     solve();
   }
 }
+
 
