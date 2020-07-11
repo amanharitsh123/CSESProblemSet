@@ -80,29 +80,41 @@ lli power(lli a,lli b) {
   return ans;
 }
 
+#define add(a,b) (a%MOD+b%MOD)%MOD;
+
+vector<lli> dp, arr;
+
+lli foo(lli sum) {
+  if(sum<0)
+    return 0;
+
+  if(dp[sum]!=-1)
+    return dp[sum];
+
+  lli ans=0;
+  for(auto x:arr)
+    ans=add(ans, foo(sum-x));
+
+  dp[sum]=ans;
+  return ans;
+}
 void solve() {
-  int n, sum;
-  vector<int> arr;
+  lli n, sum;
   cin >> n >> sum;
   input(arr, n);
-  vector< vector<int> > dp(n+1, vector<int> (sum+1, inf));
-  for(int i=0; i<=n; i++)
-    dp[i][0]=0;
-  for(int x=0; x<=sum; x++) {
-    for(int i=1; i<=n; i++) {
-      if(x==arr[i-1])
-        dp[i][x]=1;
-      else {
-        if(x>arr[i-1]) {
-            dp[i][x]=min(1+dp[i][x-arr[i-1]], dp[i-1][x]);
-        }
-        else
-          dp[i][x]=dp[i-1][x];
-      }
-    }
+  dp.resize(sum+1, -1);
+  dp[0]=1;
+  cout << foo(sum) << endl;
+  return;
+
+  // Bottom Up
+  for(lli s=0; s<=sum; s++) {
+    for(auto x:arr)
+      if(s>=x)
+        dp[s]=add(dp[s], dp[s-x]);
   }
 
-  cout << (dp[n][sum]==inf?-1:dp[n][sum]) << endl;
+  cout << dp[sum] << endl;
 }
 
 int main() {
