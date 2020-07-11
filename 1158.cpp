@@ -80,8 +80,7 @@ lli power(lli a,lli b) {
   return ans;
 }
 
-const int N=2;
-lli dp[N+1][100001];
+lli dp[100001];
 
 void solve() {
   lli n, sum;
@@ -89,18 +88,14 @@ void solve() {
   vector<lli> price, pages;
   input(price, n);
   input(pages, n);
-  int turn=1;
   for(int i=1; i<=n; i++) {
-    for(int p=0; p<=sum; p++) {
-      dp[turn][p]=dp[turn^1][p];
+    for(int p=sum; p>=price[i-1]; p--) {
       if(price[i-1]<=p)
-        dp[turn][p]=max(dp[turn^1][p],dp[turn^1][p-price[i-1]]+pages[i-1]);
+        dp[p]=max(dp[p],dp[p-price[i-1]]+pages[i-1]);
     }
-    turn^=1;
   }
 
-  turn^=1;
-  cout << dp[turn][sum] << endl;
+  cout <<dp[sum] << endl;
 }
 
 int main() {
