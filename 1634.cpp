@@ -85,24 +85,15 @@ void solve() {
   vector<int> arr;
   cin >> n >> sum;
   input(arr, n);
-  vector< vector<int> > dp(n+1, vector<int> (sum+1, inf));
-  for(int i=0; i<=n; i++)
-    dp[i][0]=0;
-  for(int x=0; x<=sum; x++) {
-    for(int i=1; i<=n; i++) {
-      if(x==arr[i-1])
-        dp[i][x]=1;
-      else {
-        if(x>arr[i-1]) {
-            dp[i][x]=min(1+dp[i][x-arr[i-1]], dp[i-1][x]);
-        }
-        else
-          dp[i][x]=dp[i-1][x];
-      }
-    }
+  vector<lli> dp(sum+1, 1e9);
+  dp[0]=0;
+  for(lli s=0; s<=sum; s++) {
+    for(auto x:arr)
+      if(x<=s)
+        dp[s]=min(dp[s], 1+dp[s-x]);
   }
 
-  cout << (dp[n][sum]==inf?-1:dp[n][sum]) << endl;
+  cout << (dp[sum]==1e9?-1:dp[sum]) << endl;
 }
 
 int main() {
