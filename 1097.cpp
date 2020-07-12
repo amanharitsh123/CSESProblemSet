@@ -82,6 +82,7 @@ lli power(lli a,lli b) {
 
 const int N=5*1e3;
 lli dp[N][N][2];
+
 void solve() {
   int n;
   vector<lli> arr;
@@ -94,7 +95,7 @@ void solve() {
     int i=0, j=len-1;
     while(j<n) {
       dp[i][j][0]=max(arr[i]+dp[i+1][j][1], arr[j]+dp[i][j-1][1]);
-      dp[i][j][1]=min(arr[i]+dp[i+1][j][1], arr[j]+dp[i][j-1][1]);
+      dp[i][j][1]=min(dp[i+1][j][0], dp[i][j-1][0]);
       ++j, ++i;
     }
   }
