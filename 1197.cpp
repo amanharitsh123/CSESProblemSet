@@ -107,18 +107,19 @@ void bellmanford() {
   vector<lli> ans;
   for(auto x:edges) {
     if(dist[x.v]>dist[x.u]+x.w) {
-      ans={x.u};
+      parent[x.v]=x.u;
       int cur=x.u;
+      vector<bool> visited(n+1, false);
+      while(!visited[cur]) {
+        visited[cur]=true;
+        cur=parent[cur];
+      }
+      int j=cur;
+      ans={j};
       while(true) {
-        if(cur==-1)
-          break;
-        if(cur==parent[cur]) {
-          ans.pb(x.u);
-          break;
-        }
         cur=parent[cur];
         ans.pb(cur);
-        if(cur==x.u)
+        if(cur==j)
           break;
       }
     }
